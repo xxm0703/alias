@@ -3,25 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Alias</title>
-    <script src="main.js"></script>
+    <script src="setup.js"></script>
+    <script src="gameLoop.js"></script>
     <link rel="stylesheet" type="text/css" href="main.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<select onchange="setN(this)">
+<form action="" id="signup">
+    P1: <input type="text" id="input1"><br>
+    P2: <input type="text" id="input2"><br>
+    <input type="button" onclick="submitting(this)">
+</form>
+<select id="select" onchange="setN(this)">
     <option>--</option>
     <option value="3">3</option>
     <option value="4">4</option>
     <option value="5">5</option>
     <option value="6">6</option>
 </select>
-<form id="signup">
-    P1: <input type="text" id="1"><br>
-    P2: <input onchange="editSignUp(this)" type="text" id="2"><br>
-    <input id="submit" type="submit" onclick="submiting(this)" value="Submit">
-</form>
+<h2 id="p_name"></h2>
 <div id="buttons"></div>
 </body>
 </html>

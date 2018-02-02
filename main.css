@@ -7,3 +7,6 @@
 #buttons{
     margin-top: 20%;
 }
+#select{
+    visibility: hidden;
+}
