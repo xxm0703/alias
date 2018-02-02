@@ -1,15 +1,16 @@
 let used_words = [];
-let words = ["Котка", "Куче", "Риба", "Тигър", "Лъв", "Кон", "Слон", "Пелика", "Щъркел", "Лястовица", "Славей", "Магаре"];
+let words = ["Котка", "Куче", "Риба", "Тигър", "Лъв", "Кон", "Слон", "Пеликан", "Щъркел", "Лястовица", "Славей", "Магаре"];
 let n = 5;
 let playersCount = 2;
 let players = Array();
+let currentPlayer = -1;
 
 class Player{
     constructor(name){
         this.name = name;
         this.score = 0;
     }
-    addToScore(n){
+    addScore(n){
         this.score += n;
     }
 }
@@ -27,21 +28,26 @@ function setButtons() {
         btn.className = "btn";
         btn.addEventListener('click', wordButtonClicked);
         document.getElementById("buttons").appendChild(btn);
+        document.getElementById("buttons").appendChild(document.createElement("BR"));
     }
-    set_words();
+    setWords();
 }
 
-function set_words() {
+function setWords() {
+    currentPlayer = (currentPlayer + 1) % playersCount;
+    document.getElementById("timer").innerHTML = players[currentPlayer].score;
+    document.getElementById("p_name").innerHTML = players[currentPlayer].name;
     let randomWords = get_words(n);
     for(let i = 1; i <= n; ++i){
-        document.getElementById(i.toString()).innerHTML = randomWords[i-1];
+        let but = document.getElementById(i.toString());
+        but.innerHTML = randomWords[i - 1];
+        but.style.backgroundColor = "";
     }
 }
 
 function submitting(form) {
     form = form.parentElement;
     form.style.visibility = "hidden";
-    console.log(form);
     for(let i = 0; i < playersCount; ++i){
         let player = new Player(form[i].value);
         players.push(player);
@@ -63,23 +69,12 @@ function submitting(form) {
 //     form.parentNode.insertBefore(br, document.getElementById("submit"));
 // }
 
-function wordButtonClicked(e){
-    console.log(e.target);
-    if(e.target.style.backgroundColor === "gray"){
-        e.target.style.backgroundColor = "";
-
-        return;
-    }
-    e.target.style.backgroundColor = "gray";
-}
-
 function get_words(){
     let result = new Array(n);
     for (let i = 0; i < n; ++i){
         let index = Math.floor(Math.random()*words.length);
         while (used_words.indexOf(index) !== -1) {
             index = Math.floor(Math.random() * words.length);
-            console.log(used_words);
         }
         result[i] = words[index];
         used_words.push(index);

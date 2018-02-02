@@ -1,12 +1,16 @@
+#buttons{
+    margin-bottom: 40%;
+    text-align: center;
+}
 .btn{
-    width: 40%;
+    width: 30%;
     height: 30px;
     margin-top: 10px;
-    margin-left: 30%;
-}
-#buttons{
-    margin-top: 20%;
 }
 #select{
     visibility: hidden;
+}
+.text{
+    margin-top: 10%;
+    text-align: center;
 }
