@@ -1,9 +1,10 @@
-let used_words = [];
 let words = ["Котка", "Куче", "Риба", "Тигър", "Лъв", "Кон", "Слон", "Пеликан", "Щъркел", "Лястовица", "Славей", "Магаре"];
 let n = 5;
+let reset;
+let timer, time = -1;
 let playersCount = 2;
-let players = Array();
-let currentPlayer = -1;
+let players = Array(playersCount);
+let currentPlayer = 0;
 
 class Player{
     constructor(name){
@@ -15,10 +16,24 @@ class Player{
     }
 }
 
+function submitting(form) {
+    form = form.parentElement;
+    form.style.visibility = "hidden";
+    for (let i = 0; i < playersCount; ++i) {
+        players[i] = new Player(form[i].value);
+    }
+    remove(form);
+    document.getElementById("select").style.visibility = "visible";
+}
+
+function remove(element) {
+    element.parentElement.removeChild(element);
+}
+
 function setN(drop) {
     n = drop.value;
-    drop.parentElement.removeChild(drop);
-    setButtons();
+    remove(drop);
+    document.getElementById("time_set").style.visibility = "visible";
 }
 
 function setButtons() {
@@ -30,14 +45,12 @@ function setButtons() {
         document.getElementById("buttons").appendChild(btn);
         document.getElementById("buttons").appendChild(document.createElement("BR"));
     }
-    setWords();
+    start();
 }
 
 function setWords() {
-    currentPlayer = (currentPlayer + 1) % playersCount;
-    document.getElementById("timer").innerHTML = players[currentPlayer].score;
-    document.getElementById("p_name").innerHTML = players[currentPlayer].name;
-    let randomWords = get_words(n);
+    refresh();
+    let randomWords = get_words();
     for(let i = 1; i <= n; ++i){
         let but = document.getElementById(i.toString());
         but.innerHTML = randomWords[i - 1];
@@ -45,17 +58,52 @@ function setWords() {
     }
 }
 
-function submitting(form) {
-    form = form.parentElement;
-    form.style.visibility = "hidden";
-    for(let i = 0; i < playersCount; ++i){
-        let player = new Player(form[i].value);
-        players.push(player);
+function get_words() {
+    let result = [];
+    let used_words = [];
+    for (let i = 0; i < n; ++i) {
+        let index = Math.floor(Math.random() * words.length);
+        while (used_words.indexOf(index) !== -1) {
+            index = Math.floor(Math.random() * words.length);
+        }
+        result[i] = words[index];
+        used_words.push(index);
     }
-    form.parentElement.removeChild(form);
-    document.getElementById("select").style.visibility = "visible";
+    return result;
 }
 
+function refresh() {
+    document.getElementById("p_stat").innerHTML = players[currentPlayer].name + '&emsp;' + players[currentPlayer].score;
+}
+
+function start() {
+    timer = setInterval(decrement, 1000);
+    setWords();
+}
+
+function changePlayer() {
+    currentPlayer = (currentPlayer + 1) % playersCount;
+    start();
+}
+
+function timeSet(e) {
+    reset = parseInt(e.value);
+    time = reset;
+    remove(e);
+    setButtons();
+}
+
+function decrement() {
+    --time;
+    if (time < 0) {
+        clearInterval(timer);
+        time = reset;
+        document.getElementById("timer").innerHTML = time.toString();
+        changePlayer();
+        return;
+    }
+    document.getElementById("timer").innerHTML = time.toString();
+}
 // function editSignUp(form) {
 //
 //     let inp = document.createElement("INPUT");
@@ -68,16 +116,3 @@ function submitting(form) {
 //     form.parentNode.insertBefore(inp, document.getElementById("submit"));
 //     form.parentNode.insertBefore(br, document.getElementById("submit"));
 // }
-
-function get_words(){
-    let result = new Array(n);
-    for (let i = 0; i < n; ++i){
-        let index = Math.floor(Math.random()*words.length);
-        while (used_words.indexOf(index) !== -1) {
-            index = Math.floor(Math.random() * words.length);
-        }
-        result[i] = words[index];
-        used_words.push(index);
-    }
-    return result;
-}

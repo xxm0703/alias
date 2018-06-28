@@ -7,10 +7,15 @@
     height: 30px;
     margin-top: 10px;
 }
-#select{
+
+#select, #time_set {
     visibility: hidden;
 }
 .text{
     margin-top: 10%;
     text-align: center;
+}
+
+#timer {
+    margin-bottom: 100px;
 }

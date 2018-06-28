@@ -6,24 +6,28 @@
     <script src="setup.js"></script>
     <script src="gameLoop.js"></script>
     <link rel="stylesheet" type="text/css" href="main.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<form action="" id="signup">
-    P1: <input type="text" id="input1"><br>
-    P2: <input type="text" id="input2"><br>
+<form title="names" id="signup">
+    P1: <input title="p1" type="text" id="input1"><br>
+    P2: <input title="p2" type="text" id="input2"><br>
     <input type="button" onclick="submitting(this)" value="Enter">
 </form>
-<select id="select" onchange="setN(this)">
+<select title="count" id="select" onchange="setN(this)">
     <option>--</option>
     <option value="3">3</option>
     <option value="4">4</option>
     <option value="5">5</option>
     <option value="6">6</option>
 </select>
-<h2 id="p_name" class="text"></h2>
+<select title="timer" id="time_set" onchange="timeSet(this)">
+    <option>--</option>
+    <option value="15">15</option>
+    <option value="30">30</option>
+    <option value="45">45</option>
+    <option value="60">60</option>
+</select>
+<h2 id="p_stat" class="text"></h2>
 <h1 id="timer" class="text"></h1>
 <div id="buttons"></div>
 </body>
